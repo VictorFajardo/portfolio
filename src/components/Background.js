@@ -13,15 +13,25 @@ class Background extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      w: window.innerWidth,
-      h: window.innerHeight,
+      w: null,
+      h: null,
     }
   }
   componentDidMount() {
+    this.handleWindowSizeChange()
+    window.addEventListener('resize', this.handleWindowSizeChange)
+  }
+
+  componentDidUpdate() {
+    if (this.ani) cancelAnimationFrame(this.ani)
     this.stars()
   }
 
+  handleWindowSizeChange = () => {
+    this.setState({ w: window.innerWidth, h: window.innerHeight })
+  }
   stars() {
+    console.log('stars')
     this.canvas = document.getElementById("cosmos")
     this.ctx = this.canvas.getContext("2d")
     this.ctx.strokeStyle = "#dfd4f6"
@@ -83,7 +93,7 @@ class Background extends React.Component {
     var { w, h } = this.state
     return (
       <aside className="stars">
-        <canvas width={w} height={h} id="cosmos"></canvas>
+        <canvas width={w || 300} height={h || 150} id="cosmos"></canvas>
       </aside>
     )
   }
