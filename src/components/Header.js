@@ -29,7 +29,7 @@ const Header = () => {
         </a>
       </div>
       <div className="half right menu">
-        <a href="" target="_blank" rel="noreferrer" title="Menu">
+        <a href="/" target="_blank" rel="noreferrer" title="Menu">
           <FaBars />
         </a>
       </div>

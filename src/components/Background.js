@@ -1,15 +1,6 @@
 import React from "react"
-// import Link from "gatsby-plugin-transition-link"
-// import TransitionLink from "gatsby-plugin-transition-link"
-// import Star from "../images/stars.svg"
-// import { useStaticQuery, graphql } from "gatsby"
-
-// import gsap from "gsap"
-// import { render } from "react-dom"
 
 class Background extends React.Component {
-  //Variables
-
   constructor(props) {
     super(props)
     this.state = {
@@ -19,7 +10,7 @@ class Background extends React.Component {
   }
   componentDidMount() {
     this.handleWindowSizeChange()
-    window.addEventListener('resize', this.handleWindowSizeChange)
+    window.addEventListener("resize", this.handleWindowSizeChange)
   }
 
   componentDidUpdate() {
@@ -31,7 +22,7 @@ class Background extends React.Component {
     this.setState({ w: window.innerWidth, h: window.innerHeight })
   }
   stars() {
-    console.log('stars')
+    console.log("stars")
     this.canvas = document.getElementById("cosmos")
     this.ctx = this.canvas.getContext("2d")
     this.ctx.strokeStyle = "#dfd4f6"
@@ -85,7 +76,7 @@ class Background extends React.Component {
   }
   drawStars() {
     this.ctx.beginPath()
-    this.elements.map(el => {
+    this.elements.forEach(el => {
       this.ctx.moveTo(el.x, el.y)
       this.ctx.lineTo(el.x - this.lx[el.l], el.y + this.ly[el.l])
     })
