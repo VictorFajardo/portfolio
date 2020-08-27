@@ -53,10 +53,14 @@ class Background extends React.Component {
         })
       }
     }
+    this.performance = 0;
     this.draw()
   }
 
   draw() {
+    this.delta = (performance.now() - this.performance) / 100;
+    console.log(this.delta)
+    this.performance = performance.now()
     this.clearCanvas()
     this.updateStars()
     this.drawStars()
@@ -67,8 +71,8 @@ class Background extends React.Component {
   }
   updateStars() {
     this.elements = this.elements.map(el => {
-      el.x -= (this.sx * this.s[el.l]) / 10
-      el.y += (this.sy * this.s[el.l]) / 10
+      el.x -= (this.sx * this.s[el.l]) * this.delta
+      el.y += (this.sy * this.s[el.l]) * this.delta
       if (el.x <= 0) {
         el.x = Math.random() * this.state.w
         el.y = 0
