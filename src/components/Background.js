@@ -22,7 +22,6 @@ class Background extends React.Component {
     this.setState({ w: window.innerWidth, h: window.innerHeight })
   }
   stars() {
-    console.log("stars")
     this.canvas = document.getElementById("cosmos")
     this.ctx = this.canvas.getContext("2d")
     this.ctx.strokeStyle = "#dfd4f6"
@@ -44,13 +43,13 @@ class Background extends React.Component {
         })
       }
     }
-    this.performance = 0;
+    this.performance = null;
     this.draw()
   }
 
   draw() {
-    this.delta = (performance.now() - this.performance) / 100;
-    console.log(this.delta)
+    this.lapse = (performance.now() - this.performance) / 1000
+    this.delta = this.lapse > 1 ? 0 : 10 * this.lapse
     this.performance = performance.now()
     this.clearCanvas()
     this.updateStars()
@@ -62,8 +61,8 @@ class Background extends React.Component {
   }
   updateStars() {
     this.elements = this.elements.map(el => {
-      el.x -= (this.sx * this.s[el.l]) * this.delta
-      el.y += (this.sy * this.s[el.l]) * this.delta
+      el.x -= this.sx * this.s[el.l] * this.delta
+      el.y += this.sy * this.s[el.l] * this.delta
       if (el.x <= 0) {
         el.x = Math.random() * this.state.w
         el.y = 0
@@ -84,7 +83,6 @@ class Background extends React.Component {
   }
 
   render() {
-    // console.log(this.state)
     var { w, h } = this.state
     return (
       <aside className="stars">
