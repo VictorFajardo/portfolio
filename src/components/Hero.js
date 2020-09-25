@@ -1,12 +1,30 @@
 import React from "react"
+import Rollover from "./Rollover"
 // import Link from "gatsby-plugin-transition-link"
 // import TransitionLink from "gatsby-plugin-transition-link"
 import { useStaticQuery, graphql } from "gatsby"
 
 const Hero = () => {
-  var { rocket, ovni } = useStaticQuery(query)
-  // console.log(contentfulAsset)
-  // console.log(rocket)
+  var {
+    rocket,
+    ovni,
+    heart,
+    balloon,
+    sparkles,
+    partyPopper,
+    sparklingHeart,
+    confettiBall,
+  } = useStaticQuery(query)
+  // console.log(
+  //   // rocket,
+  //   // ovni,
+  //   // heart,
+  //   // balloon,
+  //   sparkles,
+  //   partyPopper,
+  //   sparklingHeart,
+  //   confettiBall
+  // )
   return (
     <section className="home">
       <div
@@ -24,21 +42,68 @@ const Hero = () => {
         <a href="/">Victor Fajardo.</a>
         <br />
         I'm a lead software engineer.
-        <br />I create <a href="/">beautiful</a>, <a href="/">interactive</a>,
-        and <a href="/">fun</a> websites and games!
+        <br />I create{" "}
+        <Rollover
+          title="beautiful"
+          query={[heart, sparkles]}
+          speed="250"
+        />, <Rollover title="interactive" query={[rocket, ovni]} speed="250" />,
+        and <Rollover title="fun" query={[balloon, partyPopper]} speed="350" />{" "}
+        websites and games!
       </h1>
+      {/* <div
+        id="sparkles"
+        className="svg"
+        dangerouslySetInnerHTML={{ __html: sparkles.svg.content }}
+      /> */}
     </section>
   )
 }
 
 export const query = graphql`
   {
+    sparklingHeart: contentfulAsset(
+      file: { fileName: { eq: "sparkling-heart.svg" } }
+    ) {
+      svg {
+        content
+      }
+    }
+    confettiBall: contentfulAsset(
+      file: { fileName: { eq: "confetti-ball.svg" } }
+    ) {
+      svg {
+        content
+      }
+    }
+    sparkles: contentfulAsset(file: { fileName: { eq: "sparkles.svg" } }) {
+      svg {
+        content
+      }
+    }
+    partyPopper: contentfulAsset(
+      file: { fileName: { eq: "party-popper.svg" } }
+    ) {
+      svg {
+        content
+      }
+    }
+    balloon: contentfulAsset(file: { fileName: { eq: "balloon.svg" } }) {
+      svg {
+        content
+      }
+    }
     rocket: contentfulAsset(file: { fileName: { eq: "rocket.svg" } }) {
       svg {
         content
       }
     }
     ovni: contentfulAsset(file: { fileName: { eq: "flying-saucer.svg" } }) {
+      svg {
+        content
+      }
+    }
+    heart: contentfulAsset(file: { fileName: { eq: "heart.svg" } }) {
       svg {
         content
       }

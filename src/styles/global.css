@@ -103,7 +103,17 @@ footer {
   height: 128px;
   width: 128px;
 }
-
+.animated {
+  position: relative;
+}
+.animated .svg {
+  font-size: initial;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 32px;
+  height: 32px;
+}
 #rocket {
   top: calc(100% + 3rem);
   right: calc(100% - 3rem);

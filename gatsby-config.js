@@ -43,6 +43,7 @@ module.exports = {
       },
     },
     `gatsby-transformer-inline-svg`,
+    `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
   ],
 }
