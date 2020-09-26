@@ -11,20 +11,23 @@ const Hero = () => {
     heart,
     balloon,
     sparkles,
+    fireworks,
     partyPopper,
     sparklingHeart,
     confettiBall,
   } = useStaticQuery(query)
-  // console.log(
-  //   // rocket,
-  //   // ovni,
-  //   // heart,
-  //   // balloon,
-  //   sparkles,
-  //   partyPopper,
-  //   sparklingHeart,
-  //   confettiBall
-  // )
+  console.log(
+    rocket,
+    fireworks
+    //   // rocket,
+    //   // ovni,
+    //   // heart,
+    //   // balloon,
+    //   sparkles,
+    //   partyPopper,
+    //   sparklingHeart,
+    //   confettiBall
+  )
   return (
     <section className="home">
       <div
@@ -48,7 +51,7 @@ const Hero = () => {
           query={[heart, sparkles]}
           speed="250"
         />, <Rollover title="interactive" query={[rocket, ovni]} speed="250" />,
-        and <Rollover title="fun" query={[balloon, partyPopper]} speed="350" />{" "}
+        and <Rollover title="fun" query={[balloon, fireworks]} speed="350" />{" "}
         websites and games!
       </h1>
       {/* <div
@@ -62,6 +65,11 @@ const Hero = () => {
 
 export const query = graphql`
   {
+    fireworks: contentfulAsset(file: { fileName: { eq: "fireworks.svg" } }) {
+      svg {
+        content
+      }
+    }
     sparklingHeart: contentfulAsset(
       file: { fileName: { eq: "sparkling-heart.svg" } }
     ) {
