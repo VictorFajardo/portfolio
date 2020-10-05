@@ -12,22 +12,22 @@ const Hero = () => {
     balloon,
     sparkles,
     fireworks,
-    partyPopper,
-    sparklingHeart,
-    confettiBall,
+    // partyPopper,
+    // sparklingHeart,
+    // confettiBall,
   } = useStaticQuery(query)
-  console.log(
-    rocket,
-    fireworks
-    //   // rocket,
-    //   // ovni,
-    //   // heart,
-    //   // balloon,
-    //   sparkles,
-    //   partyPopper,
-    //   sparklingHeart,
-    //   confettiBall
-  )
+  // console.log(
+  //   rocket,
+  //   fireworks
+  //   // rocket,
+  //   // ovni,
+  //   // heart,
+  //   // balloon,
+  //   sparkles,
+  //   partyPopper,
+  //   sparklingHeart,
+  //   confettiBall
+  // )
   return (
     <section className="home">
       <div
@@ -54,11 +54,6 @@ const Hero = () => {
         and <Rollover title="fun" query={[balloon, fireworks]} speed="350" />{" "}
         websites and games!
       </h1>
-      {/* <div
-        id="sparkles"
-        className="svg"
-        dangerouslySetInnerHTML={{ __html: sparkles.svg.content }}
-      /> */}
     </section>
   )
 }
@@ -70,32 +65,32 @@ export const query = graphql`
         content
       }
     }
-    sparklingHeart: contentfulAsset(
-      file: { fileName: { eq: "sparkling-heart.svg" } }
-    ) {
-      svg {
-        content
-      }
-    }
-    confettiBall: contentfulAsset(
-      file: { fileName: { eq: "confetti-ball.svg" } }
-    ) {
-      svg {
-        content
-      }
-    }
+    # sparklingHeart: contentfulAsset(
+    #   file: { fileName: { eq: "sparkling-heart.svg" } }
+    # ) {
+    #   svg {
+    #     content
+    #   }
+    # }
+    # confettiBall: contentfulAsset(
+    #   file: { fileName: { eq: "confetti-ball.svg" } }
+    # ) {
+    #   svg {
+    #     content
+    #   }
+    # }
     sparkles: contentfulAsset(file: { fileName: { eq: "sparkles.svg" } }) {
       svg {
         content
       }
     }
-    partyPopper: contentfulAsset(
-      file: { fileName: { eq: "party-popper.svg" } }
-    ) {
-      svg {
-        content
-      }
-    }
+    # partyPopper: contentfulAsset(
+    #   file: { fileName: { eq: "party-popper.svg" } }
+    # ) {
+    #   svg {
+    #     content
+    #   }
+    # }
     balloon: contentfulAsset(file: { fileName: { eq: "balloon.svg" } }) {
       svg {
         content

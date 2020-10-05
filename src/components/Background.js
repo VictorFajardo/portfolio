@@ -14,39 +14,51 @@ class Background extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.ani) cancelAnimationFrame(this.ani)
-    this.stars()
+    console.log("component update...", this.handler)
+    if (this.handler) {
+      if (this.ani) cancelAnimationFrame(this.ani)
+      this.stars()
+      this.handler = false
+    }
   }
 
   handleWindowSizeChange = () => {
-    this.setState({ w: window.innerWidth, h: window.innerHeight })
+    console.log("handler...")
+    this.handler = true
+    this.setState({
+      w: window.innerWidth,
+      h: window.innerHeight,
+    })
   }
   stars() {
+    console.log("stars...")
     this.canvas = document.getElementById("cosmos")
     this.ctx = this.canvas.getContext("2d")
     this.ctx.strokeStyle = "#dfd4f6"
     this.elements = []
     this.a = Math.atan(this.state.h / this.state.w)
-    this.l = [2, 4, 12]
-    this.lx = this.l.map((_, i) => this.l[i] * Math.cos(this.a))
-    this.ly = this.l.map((_, i) => this.l[i] * Math.sin(this.a))
+    this.r = [1, 1.5, 2]
     this.sx = Math.cos(this.a)
     this.sy = Math.sin(this.a)
-    this.s = [3, 6, 24]
-    this.n = [100, 50, 25]
+    this.s = [3, 6, 12]
+    this.n = [240, 60, 15]
+    this.cr = [0, 60, 240]
     for (var i = 0; i < this.n.length; i++) {
       for (var j = 0; j < this.n[i]; j++) {
         this.elements.push({
           x: Math.random() * this.state.w,
           y: Math.random() * this.state.h,
           l: i,
+          r: this.r[i],
+          c: this.getColor(),
+          s: this.getSpeed(this.s[i]),
         })
       }
     }
-    this.performance = null;
+    console.log(this.elements)
+    this.performance = null
     this.draw()
   }
-
   draw() {
     this.lapse = (performance.now() - this.performance) / 1000
     this.delta = this.lapse > 1 ? 0 : 10 * this.lapse
@@ -61,24 +73,67 @@ class Background extends React.Component {
   }
   updateStars() {
     this.elements = this.elements.map(el => {
-      el.x -= this.sx * this.s[el.l] * this.delta
-      el.y += this.sy * this.s[el.l] * this.delta
+      el.x -= this.sx * el.s * this.delta
+      el.y += this.sy * el.s * this.delta
       if (el.x <= 0) {
-        el.x = Math.random() * this.state.w
-        el.y = 0
+        this.resetStar(el, Math.random() * this.state.w, 0)
       } else if (el.y >= this.state.h) {
-        el.x = this.state.w
-        el.y = Math.random() * this.state.h
+        this.resetStar(el, this.state.w, Math.random() * this.state.h)
       }
       return el
     })
   }
+  resetStar(el, x, y) {
+    el.x = x
+    el.y = y
+    el.c = this.getColor()
+    el.s = this.getSpeed(this.s[el.l])
+  }
+  getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
+  getColor() {
+    return `hsl(${
+      this.cr[this.getRandom(0, this.cr.length - 1)]
+    }, ${this.getRandom(50, 100)}%, 88%)`
+  }
+  getSpeed(s) {
+    return this.getRandom(s * 0.8, s * 1.2)
+  }
   drawStars() {
-    this.ctx.beginPath()
+    this.ctx.save()
     this.elements.forEach(el => {
-      this.ctx.moveTo(el.x, el.y)
-      this.ctx.lineTo(el.x - this.lx[el.l], el.y + this.ly[el.l])
+      this.ctx.beginPath()
+      var points = el.l == 2 ? 6 : 4
+      var outer = el.r
+      var inner = outer / 2
+      for (var i = 0; i < 2 * points + 1; i++) {
+        var r = i % 2 == 0 ? outer : inner
+        if ((i == 0 || i == 2 * points) && el.l == 2) r *= 6
+        var a = Math.PI * (i / points + 0.5) + this.a
+        this.ctx.lineTo(el.x + r * Math.sin(a), el.y + r * Math.cos(a))
+      }
+      this.ctx.fillStyle = el.c
+      this.ctx.fill()
     })
+    this.ctx.closePath()
+  }
+
+  drawStar(centerX, centerY, points, outer, inner, fill, stroke, line) {
+    // define the star
+    this.ctx.beginPath()
+    this.ctx.moveTo(centerX, centerY + outer)
+    for (var i = 0; i < 2 * points + 1; i++) {
+      var r = i % 2 == 0 ? outer : inner
+      var a = (Math.PI * i) / points
+      this.ctx.lineTo(centerX + r * Math.sin(a), centerY + r * Math.cos(a))
+    }
+    this.ctx.closePath()
+    // draw
+    this.ctx.fillStyle = fill
+    this.ctx.fill()
+    this.ctx.strokeStyle = stroke
+    this.ctx.lineWidth = line
     this.ctx.stroke()
   }
 

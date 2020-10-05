@@ -5,21 +5,24 @@ import gsap from "gsap"
 class Rollover extends React.Component {
   constructor(props) {
     super(props)
+    //Container Ref
     this.container = React.createRef()
   }
   componentDidMount() {
+    //Getting the width of the emoji
     this.animationWidth = this.animations[0].current.offsetWidth
+    //Getting the width of the container
     this.containerWidth = this.container.current.offsetWidth
   }
   onMouseEnterHandler = () => {
     //Starting the loop
-    console.log("start")
+    // console.log("start")
     this.lastPos = 0
     this.animationLoop()
   }
   onMouseLeaveHandler = () => {
     //Clearing the loop
-    console.log("end")
+    // console.log("end")
     clearTimeout(this.loop)
   }
   onClickHandler = e => {
@@ -27,13 +30,18 @@ class Rollover extends React.Component {
   }
   animationLoop() {
     //Animation cicle
+    //Creating the element
     var element = this.createElement()
+    //Animating the element
     this.animateElement(element)
+    //Looping the animation cicle
     this.loop = setTimeout(() => this.animationLoop(), this.props.speed)
   }
 
   createElement() {
+    //Selecting one emoji at random
     var t = Math.floor(this.animations.length * Math.random())
+    //Cloning the emoji
     var el = this.animations[t].current.cloneNode(true)
     el.style.left = this.randomPosition() + "px"
     el.dataset.type = t

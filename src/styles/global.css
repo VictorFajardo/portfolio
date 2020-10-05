@@ -22,6 +22,10 @@ body,
 .tl-edges {
   width: 100%;
 }
+.tl-wrapper {
+  overflow: hidden;
+  height: 100%;
+}
 
 body {
   font-family: Lato;
